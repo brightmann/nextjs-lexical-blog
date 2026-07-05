@@ -1,13 +1,8 @@
 ---
 title: "Data Table Relation's Normalization"
-subtitle: ""
-summary: "Introduces functional dependencies, and the database paradigms 1NF, 2NF, 3NF, BCNF, and 4NF. and use examples to explain their concepts and connections."
-coverURL: ""
 time: "2024-03-12"
 tags: ["database"]
-noPrompt: false
-pin: false
-allowShare: true
+summary: "Introduces functional dependencies, and the database paradigms 1NF, 2NF, 3NF, BCNF, and 4NF. and use examples to explain their concepts and connections."
 ---
 
 ## Functional Dependencies
