@@ -5,9 +5,16 @@
 @import "./typesetting.css";
 @import "./formula.css";
 @import "./scrollbar.css";
-
 @import "./font.css";
 @import "./highlight.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.selection-style *::-moz-selection {
+   --tw-bg-opacity: 1;
+}
 
 @layer base {
   :root {
