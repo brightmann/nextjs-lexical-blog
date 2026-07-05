@@ -1,13 +1,8 @@
 ---
 title: "Taylor formula, taylor theorem, taylor series, taylor expansion"
-subtitle: ""
 summary: "This article mainly introduces the content and connection between the four concepts of Taylor's formula, Taylor's theorem, Taylor series and Taylor's expansion."
-coverURL: ""
 time: "2024-03-06"
 tags: ["mathematics"]
-noPrompt: false
-pin: false
-allowShare: true
 ---
 
 ## Taylor Formula
