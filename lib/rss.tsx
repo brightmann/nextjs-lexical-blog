@@ -69,7 +69,7 @@ export const generateRSSFeed = async () => {
     const mdxSource = await serialize(postFileContent ?? "", {
       parseFrontmatter: true,
       mdxOptions: {
-        remarkPlugins: [remarkPrism, externalLinks, remarkMath, remarkGfm],
+        remarkPlugins: [remarkPrism as any, externalLinks, remarkMath, remarkGfm],
         rehypePlugins: [rehypeMathJax, rehypeAutolinkHeadings, rehypeSlug, rehypePresetMinify as any, rehypeRaw],
         format: "md",
       },
