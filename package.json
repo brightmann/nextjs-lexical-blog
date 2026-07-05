@@ -52,7 +52,7 @@
     "minisearch": "^7.1.0",
     "nanoid": "^5.0.7",
     "next": "latest",
-    "next-mdx-remote": "6.0.0",
+    "next-mdx-remote": "^4.4.1",
     "next-seo": "^6.6.0",
     "next-share": "^0.27.0",
     "next-themes": "^0.3.0",
