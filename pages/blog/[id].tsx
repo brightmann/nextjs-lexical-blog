@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps<ReaderPageProps> = async (context) =
   const mdxSource = await serialize(source, {
     parseFrontmatter: true,
     mdxOptions: {
-      remarkPlugins: [externalLinks, remarkMath, remarkGfm],
+      remarkPlugins: [externalLinks as any, remarkMath, remarkGfm],
       rehypePlugins: [
         rehypeRaw,
 
