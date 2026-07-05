@@ -1,14 +1,8 @@
 ---
 title: "Chinese-Japanese-Korean Characters Typography Preview"
-subtitle: ""
 summary: "This article is used to display fonts, typography and layout effects for Chinese, Japanese and Korean characters."
-coverURL: ""
 time: "2024-02-17"
 tags: ["others"]
-noPrompt: false
-pin: false
-allowShare: true
-closed: false
 ---
 
 ## 独立宣言（简体中文）
