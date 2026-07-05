@@ -1,12 +1,8 @@
 ---
 title: "everything you ever wanted to know about the computer vision"
 summary: "One of the most powerful and compelling types of AI is computer vision which you’ve almost surely experienced in any number of ways without even knowing. Here’s a look at what it is, how it works, and why it’s so awesome (and is only going to get better)."
-coverURL: "https://miro.medium.com/v2/resize:fit:788/1*8gmgaAkFdI-9OHY5cA93xQ.png"
 time: "2023-12-25"
 tags: ["computer-vision"]
-noPrompt: false
-pin: false
-allowShare: true
 ---
 
 > This post is used to preview the display effect of long articles. The author is Ilija Mihajlovic and is reproduced in [here](https://towardsdatascience.com/everything-you-ever-wanted-to-know-about-computer-vision-heres-a-look-why-it-s-so-awesome-e8a58dfb641e)
