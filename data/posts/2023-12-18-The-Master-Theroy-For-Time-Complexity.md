@@ -1,13 +1,8 @@
 ---
 title: "The Master Theorem For Time Complexity"
-subtitle: ""
 summary: "In this article, we will model the time complexity of divide and conquer using mathematical methods, analyze its asymptotic properties, and provide three methods of calculation."
-coverURL: ""
 time: "2023-12-18"
 tags: ["algorithm", "mathematics", "computation"]
-noPrompt: false
-pin: false
-allowShare: true
 ---
 
 When we navigate through the ocean of divide and conquer, there's a question that must be addressed—how is the time complexity of divide and conquer algorithms calculated?
