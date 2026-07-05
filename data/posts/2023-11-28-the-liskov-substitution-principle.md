@@ -1,12 +1,8 @@
 ---
 title: "The Liskov Substitution Principle"
-subtitle: ""
 summary: "A detailed explanation of the Liskov Substitution Principle, What it is, How to use it and why it benefits the architecture of our code."
-coverURL: null
 time: "2023-11-28"
 tags: ["project-practice"]
-noPrompt: false
-pin: false
 ---
 
 ## Introduction
