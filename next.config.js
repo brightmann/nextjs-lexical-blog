@@ -24,9 +24,10 @@ module.exports = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      canvas: "@napi-rs/canvas",
+      canvas: false,
+      turbopack: {},
+      serverExternalPackages: ["canvas"],
     };
     return config;
   },
-  turbopack: {},
 };
