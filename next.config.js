@@ -26,7 +26,6 @@ module.exports = {
       ...config.resolve.alias,
       canvas: false,
       serverExternalPackages: ["canvas"],
-    };
+    },
     return config;
-  },
 };
