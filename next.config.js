@@ -21,11 +21,10 @@ const nextConfig = {
 
 //module.exports = nextConfig;
 module.exports = {
-  webpack: (config) => {
+    turbopack: {},
     config.resolve.alias = {
       ...config.resolve.alias,
       canvas: false,
-      turbopack: {},
       serverExternalPackages: ["canvas"],
     };
     return config;
