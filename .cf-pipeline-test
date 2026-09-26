@@ -1,0 +1,3 @@
+Cloudflare build pipeline test commit.
+This file verifies that git pushes to main trigger automatic builds for the nlb Worker.
+It can be safely deleted.
