@@ -96,5 +96,11 @@ export const generateRSSFeed = async () => {
       image: post.frontMatter.coverURL ?? undefined,
     });
   }
-  fs.writeFile("./public/rss.xml", feed.rss2(), "utf-8", (err) => {});
+  // Written at build time (next build). At runtime on Cloudflare Workers there is
+  // no filesystem, so a failure here must not break the request.
+  try {
+    fs.writeFile("./public/rss.xml", feed.rss2(), "utf-8", (err) => {});
+  } catch {
+    // ignore: rss.xml was already generated during the build
+  }
 };

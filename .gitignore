@@ -38,6 +38,14 @@ next-env.d.ts
 .VSCodeCounter
 .turbo
 
+# opennext / cloudflare workers build output
+.open-next/
+.wrangler/
+
+# generated at build time by npm run prebuild
+data/posts-data.json
+data/search-index.json
+
 data/drafts
 
 /public/rss.xml

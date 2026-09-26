@@ -1,78 +1,45 @@
-import fs from "fs";
-import path from "path";
-import { PostFilesDirectory } from "@/consts/consts";
-import type { TPostFrontmatter, TPostListItem, TPostsByTag } from "@/types/docs.type";
-import { serialize } from "next-mdx-remote/serialize";
-import { titleCase } from "title-case";
-import { isEmptyString, nullifyEmptyArray, nullifyEmptyString } from "./utils";
+import postsDataJson from "@/data/posts-data.json";
+import type {
+  TPostFrontmatter,
+  TPostListItem,
+  TPostsByTag,
+  TPostTOCItem,
+} from "@/types/docs.type";
+import type { MDXRemoteSerializeResult } from "next-mdx-remote";
 
-async function extractFrontmatters(filepath: string): Promise<TPostFrontmatter> {
-  const source = fs.readFileSync(filepath, "utf-8");
-  const mdxSource = await serialize(source, {
-    parseFrontmatter: true,
-    mdxOptions: { format: "md" },
-  });
-  const frontmatter = mdxSource.frontmatter as TPostFrontmatter;
-
-  const normalizedTags = frontmatter.tags
-    ?.filter((tagname) => !isEmptyString(tagname))
-    .map((tagname) => tagname.toUpperCase());
-
-  const normalizedResult: TPostFrontmatter = {
-    title: titleCase(frontmatter.title),
-    subtitle: nullifyEmptyString(frontmatter.subtitle),
-    coverURL: nullifyEmptyString(frontmatter.coverURL),
-    tags: nullifyEmptyArray(normalizedTags),
-    summary: nullifyEmptyString(frontmatter.summary),
-    time: frontmatter.time,
-    pin: frontmatter.pin ?? false,
-    noPrompt: frontmatter.noPrompt ?? false,
-    allowShare: frontmatter.allowShare ?? true,
-    closed: frontmatter.closed ?? false,
-  };
-
-  return normalizedResult;
-}
-
-function readPostsDirectory(): string[] {
-  const result: string[] = [];
-  const files = fs.readdirSync(PostFilesDirectory);
-
-  for (const fileName of files) {
-    const filePath = path.join(PostFilesDirectory, fileName);
-    const fileStat = fs.statSync(filePath);
-    if (fileStat.isFile() && fileName.endsWith(".md")) {
-      result.push(filePath);
-    }
-  }
-  return result;
-}
-
-export const getPostFileContent = (postId: string): string | null => {
-  const filePath = path.join(PostFilesDirectory, `${postId}.md`);
-  if (!fs.existsSync(filePath)) return null;
-  const content = fs.readFileSync(filePath, "utf-8");
-  return content;
+// Precomputed at build time by scripts/build-posts-data.mjs (Node.js), because
+// getStaticProps can run at runtime on Cloudflare Workers where `fs` and
+// `eval` (used by MDX serialize) are unavailable.
+type TPrecomputedPost = {
+  frontmatter: TPostFrontmatter;
+  content: string;
+  compiledSource: MDXRemoteSerializeResult;
+  tocList: TPostTOCItem[];
 };
 
-const sortOutPosts = async (): Promise<{
+const postsData = postsDataJson as Record<string, TPrecomputedPost>;
+
+export const getPostFileContent = (postId: string): string | null => {
+  return postsData[postId]?.content ?? null;
+};
+
+export const getPrecomputedPost = (postId: string): TPrecomputedPost | null => {
+  return postsData[postId] ?? null;
+};
+
+const sortOutPosts = (): {
   allPostList: TPostListItem[];
   pinnedPostList: TPostListItem[];
   postsByTag: TPostsByTag;
-}> => {
+} => {
   const allPostList: TPostListItem[] = [];
   const pinnedPostList: TPostListItem[] = [];
   const postsByTag: TPostsByTag = {};
 
-  const postFilePaths: string[] = readPostsDirectory();
-
-  for (let i = 0; i < postFilePaths.length; i++) {
-    const frontmatter = await extractFrontmatters(postFilePaths[i]);
-    const postId = path.parse(postFilePaths[i]).name;
-
+  for (const postId of Object.keys(postsData)) {
     const currentPostListItem: TPostListItem = {
       id: postId,
-      frontMatter: frontmatter,
+      frontMatter: postsData[postId].frontmatter,
     };
 
     if (!currentPostListItem.frontMatter.closed) {
@@ -103,4 +70,4 @@ const sortOutPosts = async (): Promise<{
   return { allPostList: allPostList, postsByTag: postsByTag, pinnedPostList: pinnedPostList };
 };
 
-export const sortedPosts = await sortOutPosts();
+export const sortedPosts = sortOutPosts();

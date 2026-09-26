@@ -11,22 +11,10 @@ import { ContentContainer, Page } from "@/components/utils/Layout";
 import { NavBar } from "@/components/utils/NavBar";
 import { SEO } from "@/components/utils/SEO";
 import { Config } from "@/data/config";
-import { getPostFileContent, sortedPosts } from "@/lib/post-process";
-import { makeTOCTree } from "@/lib/toc";
+import { getPrecomputedPost, sortedPosts } from "@/lib/post-process";
 import type { TPostFrontmatter, TPostListItem, TPostTOCItem } from "@/types/docs.type";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { MDXRemote, type MDXRemoteSerializeResult } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
-import { renderToString } from "react-dom/server";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeHighlight from "rehype-highlight";
-import rehypeKatex from "rehype-katex";
-import rehypePresetMinify from "rehype-preset-minify";
-import rehypeRaw from "rehype-raw";
-import rehypeSlug from "rehype-slug";
-import externalLinks from "remark-external-links";
-import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
 import { titleCase } from "title-case";
 
 type ReaderPageProps = {
@@ -103,30 +91,16 @@ export const getStaticProps: GetStaticProps<ReaderPageProps> = async (context) =
     return { notFound: true };
   }
 
-  const source = getPostFileContent(postId);
+  // Precomputed at build time (scripts/build-posts-data.mjs): MDX serialize uses
+  // eval, which is unavailable on Cloudflare Workers.
+  const precomputed = getPrecomputedPost(postId);
 
-  if (source == null) {
+  if (precomputed == null) {
     return { notFound: true };
   }
 
-  const mdxSource = await serialize(source, {
-    parseFrontmatter: true,
-    mdxOptions: {
-      remarkPlugins: [externalLinks as any, remarkMath, remarkGfm],
-      rehypePlugins: [
-        rehypeRaw,
-
-        rehypeKatex as any,
-        rehypeAutolinkHeadings,
-        rehypeSlug,
-        rehypePresetMinify.plugins,
-        () => rehypeHighlight({ detect: true }),
-      ],
-      format: "md",
-    },
-  });
-
-  const tocList = makeTOCTree(renderToString(<MDXRemote {...mdxSource} />));
+  const mdxSource = precomputed.compiledSource;
+  const tocList = precomputed.tocList;
 
   const postIndexInAllPosts = sortedPosts.allPostList.findIndex((item) => item.id === postId);
 

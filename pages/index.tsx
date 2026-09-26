@@ -9,7 +9,6 @@ import { SEO } from "@/components/utils/SEO";
 import { LatestPostCountInHomePage } from "@/consts/consts";
 import { Config } from "@/data/config";
 import { sortedPosts } from "@/lib/post-process";
-import { generateRSSFeed } from "@/lib/rss";
 import type { TPostListItem } from "@/types/docs.type";
 import type { GetStaticProps } from "next";
 import Link from "next/link";
@@ -78,10 +77,6 @@ export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
       latestPostList.push(postListItem);
       j++;
     }
-  }
-
-  if (Config.RSSFeed?.enabled) {
-    await generateRSSFeed();
   }
 
   return {

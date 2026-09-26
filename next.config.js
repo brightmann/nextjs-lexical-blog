@@ -1,6 +1,7 @@
 const WebpackObfuscator = require("webpack-obfuscator");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: {
     remotePatterns: [
@@ -20,12 +21,4 @@ const nextConfig = {
 };
 
 //module.exports = nextConfig;
-module.exports = {
-    turbopack: {},
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      canvas: false,
-      serverExternalPackages: ["canvas"],
-    },
-    return config;
-};
+module.exports = nextConfig;
