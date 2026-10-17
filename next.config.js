@@ -1,7 +1,8 @@
 const WebpackObfuscator = require("webpack-obfuscator");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone",
+ // output: "standalone",
+  output: "export",
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   images: {
     remotePatterns: [
